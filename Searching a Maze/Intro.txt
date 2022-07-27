@@ -1,0 +1,68 @@
+Your car breaks down
+
+You find a splendid palace
+
+Enter the palace to look for a phone
+
+
+► How do you search the palace without getting lost?
+► How do you know that you have searched every room?
+► Also, what is the shortest path to the phone?
+
+Therefore, it is for such situations that maze-searching methods have been devised.
+
+
+► We need to keep a 'list' of the room numbers visited so far, so we don't go round in circles
+  visiting the same rooms over and over again.
+
+► If the room number is on the list, we ignore the room, since we visited it.
+► If not, we add the room number to the list.
+
+=========================================================
+
+d(a,b). d(b,a).
+d(b,e). d(e,b).
+d(b,c). d(c,b).
+d(d,e). d(e,d).                 % Include all possible doors
+d(c,d). d(d,c).
+d(e,f). d(f,e).
+d(g,e). d(e,g).
+
+hasphone(c).
+
+go(X, X, T).  % Boundary Condition
+go(X, Y, T) :- d(X,Z), \+member(Z,T), go(Z, Y, [Z|T]).   % represents going from X to Z
+go(X, Y, T) :- d(Z,X), \+member(Z,T), go(Z, Y, [Z|T]).   % represents going from Z to X
+
+Or
+
+go(X, X, T).
+go(X, Y, T) :-
+       (d(X,Z) ; d(Z,X)),
+       \+member(Z,T),
+       go(Z, Y, [Z|T]).
+
+
+
+?- go(a, X, []), hasphone(X).        %  X = c,  [] → we haven't visited any room yet
+?- hasphone(X),  go(a, X, []).       %  X = c
+?- hasphone(X),  go(a, X, [d,f]).    %  X = c, excluding d,f (i.e. we've visited d,f)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

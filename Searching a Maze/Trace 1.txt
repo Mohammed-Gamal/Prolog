@@ -1,0 +1,68 @@
+Trace:
+---------
+
+d(a,b).
+d(b,e).
+d(b,c).
+d(d,e).       % We've considered using a one-way door to make it easier
+d(c,d).       %                to trace the problem
+d(e,f).
+d(g,e).
+
+d. hasphone(c).
+
+a. go(X, X, T).
+b. go(X, Y, T) :- d(X,Z), \+member(Z,T), go(Z, Y, [Z|T]).
+c. go(X, Y, T) :- d(Z,X), \+member(Z,T), go(Z, Y, [Z|T]).
+
+
+?-  1. go(a, c, []), 11. hasphone(c).
+
+
+
+1.b  go(X=a, Y=c, T=[]) :-
+         d(X=a,Z),                  % Z = b
+         \+member(Z=b,[]),          % True
+     2.  go(Z=b, Y=c, T=[b|[]]).
+
+
+2.b  go(X=b, Y=c, T=[b]) :-
+         d(X=b,Z),                  % Z = e (don't forget 'c')
+         \+member(Z=e,[b]),         % True
+     3.  go(Z=e, Y=c, T=[e|b]).
+
+
+3.b  go(X=e, Y=c, T=[e,b]) :-      
+         d(X=e,Z),                  % Z = f
+         \+member(Z=f,[e,b]),       % True
+     4.  go(Z=f, Y=c, T=[f|e,b]).   % 2) goto to 
+
+
+4.b  go(X=f, Y=c, T=[f,e,b]) :-     % 2) Fail, backtrack to rule 4. ↑, then rule 4.c ↓
+         d(X=f,Z),                  % 1) False
+
+
+4.c  go(X=f, Y=c, T=[f,e,b]) :-     % 3) Fail, backtrack to 3.b ↑ and 'return False'
+         d(Z,X=f),                  % 1) Z = e
+         \+member(Z=e,[f,e,b]),     % 2) False
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
