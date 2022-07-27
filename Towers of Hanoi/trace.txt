@@ -1,0 +1,57 @@
+move(3, left, centre, right)
+move(2, left, right, centre)
+move(1, left, centre, right)
+move(0, left, right, centre)
+
+inform(left, centre)
+move(0, left, centre, right) T
+        
+         A      C       B
+move(1, left, centre, right)
+inform(left, right)                            #1
+
+          C       B     A
+move(1, centre, right, left)
+
+          A       C     B
+move(0, centre, left, right)
+inform(centre, right)                          #2
+
+         A      C       B
+move(2, left, right, centre)
+inform(left, centre)                           #3
+
+          C      B       A     
+move(2, right, centre, left)
+
+          A      C      B            
+move(1, right, left, centre)
+
+          A      C       B
+move(0, right, centre, left)
+inform(right, left)                             #4
+
+          C      B      A                           
+move(0, centre, left, right)
+
+          A     C       B
+move(1, right, left, centre)
+inform(right, centre)                           #5
+
+         A      C       B                             
+move(0,right, centre, left)
+inform(right, left)                             #6
+
+          C      B      A      
+move(0, centre, left, right)
+
+          A      C     B                  
+move(1, right, left,centre)
+inform(right, centre)                           #7
+
+
+
+#7 moves in total
+
+
+

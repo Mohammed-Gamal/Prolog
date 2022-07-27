@@ -1,0 +1,74 @@
+-----------------------------
+|-- ** Towers of Hanoi ** --|
+-----------------------------
+
+
+♦ General Idea:
+---------------
+
+• The boundary condition occurs when there are no discs on the source pole.
+
+• Move N-1 discs from the source pole to the spare pole, using
+  the destination as a spare. (recursive move!)
+
+• Move a single disc from the source pole to the destination pole.
+
+• Finally, move N-1 discs from the spare to the destination, using the source as the spare.
+
+=========================================
+
+hanoi(N): means to print out the sequence of moves when N discs are on the souce pole.
+
+=========================================
+
+♦ boundary condition:
+----------------------
+    
+     move(0, _, _, _) :- !.
+
+► boundary condition occurs when there are no discs on the source pole.
+
+
+
+♦ recursive case:
+----------------------
+
+   move(N, A, B, C) :-
+       M is N-1,
+       move(M, A, C, B), inform(A, B), move(M, C, B, A).
+
+   inform(X, Y) :-
+        write([move, a, disc, from, the, X, pole, to, the, Y, pole]),
+        nl. 
+
+
+► The Predicate 'move' has four arguments:
+
+  → The first argument (N): number of discs to be moved.
+  → The other three arguments are atomes that name the poles for moving the discs, which are
+         left/A:   the source
+         centre/B: destination
+         right/C:  spare
+
+
+► The predicate 'inform' uses write to print out the names of the poles that are involved in moving a disc.
+
+=========================================
+
+♦ Code:
+----------
+
+hanoi(N) :- move(N, left, centre, right).
+
+move(0, _, _, _) :- !.
+move(B, A, B, C) :-
+    M is N-1,
+    move(M, A, C, B), inform(A, B), move(M, C, B, A).
+
+inform(X, Y) :-
+     write([move,a,disc,from,the,X,pole,to,the,Y,pole]),
+     nl.
+
+-----------------------------------------------------------------
+
+Credits: Mohamed Gamal.
